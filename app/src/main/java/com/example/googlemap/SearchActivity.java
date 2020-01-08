@@ -14,6 +14,7 @@ import com.example.googlemap.model.LatitudeLongitude;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -39,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
 
         //obtain the supportmapfragment and get notified when the map is ready to be used
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync((OnMapReadyCallback) this);
         etCity = findViewById(R.id.etCity);
         btnSearch = findViewById(R.id.btnSearch);
         
