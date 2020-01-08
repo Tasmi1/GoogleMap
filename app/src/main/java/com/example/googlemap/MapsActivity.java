@@ -4,12 +4,17 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 
+import com.example.googlemap.model.LatitudeLongitude;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -39,9 +44,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        List<LatitudeLongitude>latlngs = new ArrayList<>();
+        latlngs.add(new LatitudeLongitude(27.7045398, 85.3282075, "Address Restraunt "));
+        latlngs.add(new LatitudeLongitude(27.7071881, 85.3273042, "Ichiban Restraunt "));
+
+        latlngs.add(new LatitudeLongitude(27.7076082, 85.3274, "Veda Salon "));
+        latlngs.add(new LatitudeLongitude(27.7049619, 85.3291342, "PeopleBot buspark "));
+
+        latlngs.add(new LatitudeLongitude(27.7089893, 85.325198, "Kumari Hall "));
+        latlngs.add(new LatitudeLongitude(27.7106308, 85.3193637, "Durbar Marg "));
+
+
+        CameraUpdate center, zoom;
+        for (int i = 0; i < latlngs.size(); i++)
+        {
+            center = CameraUpdateFactory.newLatLng(new LatLng(latlngs.get(i).getLat(),latlngs.get(i).getLon()));
+            zoom = CameraUpdateFactory.zoomTo(16);
+            mMap.addMarker(new MarkerOptions().position(new LatLng(latlngs.get(i).getLat(),latlngs.get(i).getLon())).title(latlngs.get(i).getMarker()));
+            mMap.moveCamera(center);
+            mMap.animateCamera(zoom);
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+        }
+
     }
 }
